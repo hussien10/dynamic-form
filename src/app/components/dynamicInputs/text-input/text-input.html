@@ -1,0 +1,15 @@
+<fieldset class="mb-3">
+  @if(field.legend) {
+    <legend class="col-form-label pt-0">{{ field.legend }}</legend>
+  }
+  <label for="exampleFormControlInput1" class="form-label">{{ field.label }}</label>
+  <input
+    [type]="field.type"
+    class="form-control"
+    [(ngModel)]="value"
+    [disabled]="disabled"
+    (ngModelChange)="handleValueChange($event)"
+    (blur)="handleTouched()"
+    [placeholder]="'Enter ' + field.label"
+  />
+</fieldset>

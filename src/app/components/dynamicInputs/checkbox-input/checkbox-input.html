@@ -1,0 +1,54 @@
+@if(field.options?.length){
+<fieldset class="mb-3">
+  <legend class="col-form-label pt-0">{{ field.legend || field.label }}</legend>
+  @if(field.optionsPerRow && field.optionsPerRow > 1) {
+    <div class="row row-cols-{{ field.optionsPerRow }} g-2">
+      @for(option of field.options; track option) {
+      <div class="col">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [checked]="isChecked(option.value)"
+            [disabled]="disabled"
+            (change)="toggleOption(option.value, $event.target.checked)"
+            (blur)="handleTouched()"
+            id="{{field.key}}_{{option.value}}"
+          />
+          <label class="form-check-label" for="{{field.key}}_{{option.value}}">{{option.key}}</label>
+        </div>
+      </div>}
+    </div>
+  } @else {
+    @for(option of field.options; track option) {
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [checked]="isChecked(option.value)"
+        [disabled]="disabled"
+        (change)="toggleOption(option.value, $event.target.checked)"
+        (blur)="handleTouched()"
+        id="{{field.key}}_{{option.value}}"
+      />
+      <label class="form-check-label" for="{{field.key}}_{{option.value}}">{{option.key}}</label>
+    </div>}
+  }
+</fieldset>
+}@else{
+  <fieldset class="mb-3">
+    <legend class="col-form-label pt-0">{{ field.legend || field.label }}</legend>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [checked]="value"
+        [disabled]="disabled"
+        (change)="toggleSingle($event.target.checked)"
+        (blur)="handleTouched()"
+        id="{{field.key}}"
+      />
+      <label class="form-check-label" for="{{field.key}}">{{field.label}}</label>
+    </div>
+  </fieldset>
+}

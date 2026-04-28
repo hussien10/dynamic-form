@@ -1,0 +1,39 @@
+<fieldset class="mb-3">
+  <legend class="col-form-label pt-0">{{ field.legend || field.label }}</legend>
+
+  @if(field.optionsPerRow && field.optionsPerRow > 1) {
+    <div class="row row-cols-{{ field.optionsPerRow }} g-2">
+      @for(option of field.options; track option) {
+      <div class="col">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            [name]="field.key"
+            [checked]="value === option.value"
+            [disabled]="disabled"
+            (change)="select(option.value)"
+            (blur)="handleTouched()"
+            id="{{field.key}}_{{option.value}}"
+          />
+          <label class="form-check-label" for="{{field.key}}_{{option.value}}">{{option.key}}</label>
+        </div>
+      </div>}
+    </div>
+  } @else {
+    @for(option of field.options; track option) {
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        [name]="field.key"
+        [checked]="value === option.value"
+        [disabled]="disabled"
+        (change)="select(option.value)"
+        (blur)="handleTouched()"
+        id="{{field.key}}_{{option.value}}"
+      />
+      <label class="form-check-label" for="{{field.key}}_{{option.value}}">{{option.key}}</label>
+    </div>}
+  }
+</fieldset>

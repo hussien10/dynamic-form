@@ -1,0 +1,46 @@
+<div [class]="getFormWrapperClass()">
+  <form [formGroup]="form">
+    @if(configrations().legend) {
+      <div class="mb-4">
+        <h3 class="h5">{{ configrations().legend }}</h3>
+      </div>
+    }
+    <div [class]="getRowClass()">
+    @for (field of sortedFields(); track field) {
+      <div [class]="getColClass()">
+        <div class="mb-3">
+          <app-dynamic-input [field]="field" [formControlName]="field.key"></app-dynamic-input>
+        </div>
+
+        @if (form.get(field.key)?.invalid && getControl(field.key).touched) {
+          <div class="alert alert-danger py-2 px-3 mb-2" role="alert">
+            <small>
+              @for (errorKey of form.get(field.key)?.errors | keyvalue; track errorKey) {
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                  {{ field.errorMessages?.[errorKey.key] }}
+                </div>
+              }
+            </small>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  @if (groupErrors.length > 0) {
+    <div class="alert alert-warning mt-3" role="alert">
+      <h6 class="alert-heading mb-2">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        Form Validation Errors
+      </h6>
+      <ul class="mb-0">
+        @for (globalError of groupErrors; track globalError) {
+          @if (form.errors?.[globalError]) {
+            <li>{{ form.errors?.[globalError] }}</li>
+          }
+        }
+      </ul>
+    </div>
+  }
+</form>
